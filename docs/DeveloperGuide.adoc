@@ -434,7 +434,7 @@ These operations can be accessed by retreiving the list of groups using `Model#g
 
 **Given below is an example usage scenario and how the model behaves at each step.**
 
-Step 1. The user launches the application. For simplicity, we assume that the groups `Project2103`, `Presentation` and `FrisbeeTeam` are present in the meeting book. None of these groups have a meeting scheduled.
+Step 1. The user launches the application. For simplicity, we assume that the groups `Project2103`, `Presentation` and `FrisbeeTeam` are present in the MeetingBook. None of these groups have a meeting scheduled.
 
 image::meetCommandStep1Diagram.png[width="600"]
 
@@ -515,7 +515,7 @@ include::UserGuide.adoc[tag=find]
 
 ===== Structure of `find` command
 
-image::FindCommandClassDiagram.png[width="800"]
+image::FindCommandClassDiagram.png[width="400"]
 
 When the user executes a `find` command, the `FindCommandParser` returns either a `FindPersonCommand`, a `FindMeetingCommand`, or a `FindGroupCommand`,
  depending on the user's input. `FindPersonCommand`, `FindMeetingCommand`, and `FindGroupCommand` extends the
@@ -552,7 +552,7 @@ Referring to the code snippet above, `FindCommand<E>` implements the `equals()` 
 
 ===== Structure of Predicates
 
-image::PredicateClassDiagram.png[width="1000"]
+image::PredicateClassDiagram.png[width="400"]
 
 The predicates are created using the abstract class `EntityContainsKeywordsPredicate<E>`.
 `PersonNameContainsKeywordsPredicate` extends `EntityContainsKeywordsPredicate<Person>`,
@@ -562,9 +562,9 @@ The predicates are created using the abstract class `EntityContainsKeywordsPredi
 [source, java]
 ----
 public abstract class EntityContainsKeywordsPredicate<E> implements Predicate<E> {
-    private final List<String> allKeywords; // the list of keywords that the tested element has to match all of
-    private final List<String> someKeywords; // the list of keywords that the tested element has to match some of
-    private final List<String> noneKeywords; // the list of keywords that the tested element cannot match any of
+    private final List<String> allKeywords;
+    private final List<String> someKeywords;
+    private final List<String> noneKeywords;
 
     private final Function<E, Predicate<String>> testKeywordPredicateGetter;
 
@@ -598,7 +598,7 @@ In the current implementation, the `sort` command only applies on the list of pe
 `ModelManager` maintains a `sortedPersons` list of type `SortedList<Person>` and a `filteredPersons` list of type
 `FilteredList<Person>`. +
 
-image::sortedList-filteredList-persons.png[width="400"]
+image::sortedList-filteredList-persons.png[width="200"]
 
 Illustrated in the figure above, `sortedPersons` list wraps the `filteredPersons` list and
 `filteredPersons` list wraps the `persons` list of type `ObservableList<Person>` maintained by `versionedMeetingBook`.
@@ -622,12 +622,12 @@ Similarly, when a user executes a `sort` command, an appropriate `Comparator<Per
 Due to this two-layered structure. The user can chain `find` and `sort` commands back-to-back to display the desired
 list. +
 
-image::findThenSortExample.png[width="800"]
+image::findThenSortExample.png[width="600"]
 
 An example can be seen in the diagram above by executing the command `find p s/yu li` followed by `sort name`.
 After applying the `sort` command, the `find` filter remains applied. The next example will demonstrate a different order. +
 
-image::sortThenFindExample.png[width="800"]
+image::sortThenFindExample.png[width="600"]
 
 The diagram above shows another example of back-to-back execution.
 The diagram shows the execution of `sort name` followed by `find p s/yeoh li`.
@@ -810,6 +810,24 @@ List will remain unchanged if it does not have any filters applied before execut
 .List group sequence diagram
 image::ListCommandSequenceDiagram.png[width="800"]
 
+Below is the pseudo code of `list` command execution.
+[source, java]
+----
+public CommandResult execute(Model model, CommandHistory history) {
+    requireNonNull(model);
+    switch (listCommandType) {
+        case PERSON:
+            // Show all persons, return success
+        case GROUP:
+            // Show all groups, return success
+        case MEETING:
+            // Show all meetings, return success
+        default:
+            // Show all persons, groups and meetings, return success
+    }
+}
+----
+
 ==== Design considerations
 ===== Aspect: Data structure to support the list command
 * **Alternative 1 (current choice)** : Use a single list class to perform all list operations.
@@ -886,7 +904,7 @@ image::xmlAdaptedUnmarshalDiagram.png[]
 The default behavior of handling conflicting entries is to ignore any conflicting entries. However, user can choose to change this behavior to overwrite any conflicting entries using `--force` option when entering the command.
 An example of the command set to the overwriting behaviour is `import --force f/backup.xml`.
 
-The code snippet below showcase how MeetingBook toggle between the behaviour.
+The code snippet below showcase how MeetingBook toggle between the behaviours.
 [source, java]
 ----
 public void merge(ReadOnlyMeetingBook imported, boolean overwrite) {
@@ -924,7 +942,7 @@ However, "Alex Lim" of the imported MeetingBook belongs to a `Group`.
 .Object Diagram of "Alex Lim" `Person` of imported MeetingBook belonging to a `Group` before merging to current MeetingBook
 image::BeforeImportAlexLimGroup.png[]
 
-Therefore, when importing the `Group` that "Alex Lim" of the imported MeetingBook is in, the `Group` will be imported without "Alex Lim" of the imported MeetingBook. The `Group` will not contains "Alex Lim" of the current MeetingBook as these two "Alex Lim" are not of the same `Person`. Even if "Alex Lim" of the imported MeetingBook is the sole member of the `Group`, the `Group` will still be created but with no members instead.
+Therefore, when importing the `Group` that "Alex Lim" of the imported MeetingBook is in, the `Group` will be imported without "Alex Lim" of the imported MeetingBook. The `Group` will not contains "Alex Lim" of the current MeetingBook as these two "Alex Lim" are not of the same `Person`. If "Alex Lim" of the imported MeetingBook is the sole member of the `Group`, the `Group` will still be created but with no members instead.
 
 .Object Diagram of "Alex Lim" `Person` of imported MeetingBook belonging to a `Group` after merging to current MeetingBook
 image::AfterImportAlexLimGroup.png[]
@@ -1532,24 +1550,24 @@ Use case ends.
 Use case ends.
 
 [discrete]
-=== Use case: Add group category
+=== Use case: Add group
 
 *MSS*
 
 1.  Student start up MeetingBook.
 2.  MeetingBook starts up.
-3.  Student enters command to create a new category with a [module code] parameter.
-4.  MeetingBook creates the category.
-5.  MeetingBook feedbacks that the category had been successfully created.
+3.  Student enters command to create a new group.
+4.  MeetingBook creates the group.
+5.  MeetingBook feedbacks that the group had been successfully created.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. Student enters category that already exists.
+* 1a. Student enters group that already exists.
 [none]
-** 1a1.  MeetingBook informs the student that the category already exists.
+** 1a1.  MeetingBook informs the student that the group already exists.
 +
 Use case ends.
 

@@ -85,7 +85,7 @@ Examples:
 
 === Editing a person : `edit`
 
-Replace the person’s parameters with those described in this command (undescribed parameters will not be changed) +
+Replace the person’s parameters with those described in this command (undescribed parameters will not be changed). +
 
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
@@ -187,13 +187,13 @@ Shorthand: `find <p|g|m> [KEYWORDS]`
 
 Examples: +
 
-image::findCommandAllExample.png[width="450"]
+image::findCommandAllExample.png[width="300"]
 * `find p Alex`: finds all persons whose name contains `Alex`. (Refer to diagram above) +
 
-image::findCommandSomeExample.png[width="450"]
+image::findCommandSomeExample.png[width="300"]
 * `find p s/yu li`: finds all persons whose name contains one of `yu` or `li`. (Refer to diagram above) +
 
-image::findCommandNoneExample.png[width="450"]
+image::findCommandNoneExample.png[width="300"]
 * `find p n/Alex Bernice`: finds all persons whose name does not contain `Alex` or `Bernice` (Refer to diagram above) +
 * `find p Betty Charles`: finds all persons whose name contains `Betty` and `Charles`. +
 * `find p s/David Eric n/James`: finds all persons whose name contains one of `David` or `Eric`,
@@ -336,7 +336,7 @@ Examples:
 // tag::import[]
 === Importing data : `import`
 
-User is able to import other data. +
+Import other MeetingBook data and integrate into the current MeetingBook. +
 
 Default behaviour is to ignore any conflicting Person/Group entries unless `--force` option is supplied. +
 
@@ -355,7 +355,7 @@ image::importSuccessfulOutput.png[width="450"]
 // tag::export[]
 === Exporting data : `export`
 
-User is able to export data to store as backup elsewhere or send data to other users of MeetingBook. +
+Export MeetingBook data to store as backup elsewhere or send the data to other users of MeetingBook. +
 A XML file containing MeetingBook data will be created at the filepath indicated by the user.
 
 Format: `export  f/FILEPATH` +

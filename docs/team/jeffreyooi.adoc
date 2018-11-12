@@ -61,7 +61,8 @@ https://github.com/CS2103-AY1819S1-W17-3/main/pull/115[#115], https://github.com
 https://github.com/CS2103-AY1819S1-W17-3/main/pull/144[#144]
 
 ** Updated contents of Developer Guide: https://github.com/CS2103-AY1819S1-W17-3/main/pull/32[#32],
-https://github.com/CS2103-AY1819S1-W17-3/main/pull/115[#115], https://github.com/CS2103-AY1819S1-W17-3/main/pull/118[#118]
+https://github.com/CS2103-AY1819S1-W17-3/main/pull/115[#115], https://github.com/CS2103-AY1819S1-W17-3/main/pull/118[#118],
+https://github.com/CS2103-AY1819S1-W17-3/main/pull/193[#193], https://github.com/CS2103-AY1819S1-W17-3/main/pull/195[#195]
 
 * Community:
 ** PRs reviewed: https://github.com/CS2103-AY1819S1-W17-3/main/pull/41[#41],
@@ -71,7 +72,10 @@ https://github.com/CS2103-AY1819S1-W17-3/main/pull/86[#86], https://github.com/C
 https://github.com/CS2103-AY1819S1-W17-3/main/pull/94[#94], https://github.com/CS2103-AY1819S1-W17-3/main/pull/96[#96],
 https://github.com/CS2103-AY1819S1-W17-3/main/pull/112[#112], https://github.com/CS2103-AY1819S1-W17-3/main/pull/117[#117],
 https://github.com/CS2103-AY1819S1-W17-3/main/pull/134[#134], https://github.com/CS2103-AY1819S1-W17-3/main/pull/135[#135],
-https://github.com/CS2103-AY1819S1-W17-3/main/pull/154[#154]
+https://github.com/CS2103-AY1819S1-W17-3/main/pull/154[#154], https://github.com/CS2103-AY1819S1-W17-3/main/pull/157[#157],
+https://github.com/CS2103-AY1819S1-W17-3/main/pull/199[#199], https://github.com/CS2103-AY1819S1-W17-3/main/pull/201[#201],
+https://github.com/CS2103-AY1819S1-W17-3/main/pull/202[#202], https://github.com/CS2103-AY1819S1-W17-3/main/pull/205[#205],
+https://github.com/CS2103-AY1819S1-W17-3/main/pull/210[#210]
 
 ** Reported bugs and suggestions for team members: https://github.com/CS2103-AY1819S1-W17-3/main/issues/64[#64],
 https://github.com/CS2103-AY1819S1-W17-3/main/issues/70[#70], https://github.com/CS2103-AY1819S1-W17-3/main/issues/74[#74],
@@ -82,7 +86,7 @@ https://github.com/CS2103-AY1819S1-W17-3/main/issues/152[#152]
 
 ** Fixed bugs: https://github.com/CS2103-AY1819S1-W17-3/main/pull/115[#115],
 https://github.com/CS2103-AY1819S1-W17-3/main/pull/118[#118], https://github.com/CS2103-AY1819S1-W17-3/main/pull/132[#132],
-https://github.com/CS2103-AY1819S1-W17-3/main/pull/142[#142]
+https://github.com/CS2103-AY1819S1-W17-3/main/pull/142[#142], https://github.com/CS2103-AY1819S1-W17-3/main/pull/159[#159]
 
 == Contributions to the User Guide
 
@@ -217,3 +221,69 @@ many items require select command.
 commands inherit from the abstract class and implement the execution functionality.
 ** Pros: Good data structure, easy to extend functionality to select other items.
 ** Cons: Requires more code to implement.
+
+=== List feature
+
+The `list` command removes any filters applied to `UniqueGroupList`, `UniquePersonList` and `UniqueMeetingList` by other
+commands. This section will explain current implementation of list command and design considerations during development
+phase.
+
+==== Current implementation
+The list mechanism is facilitated by `ModelManager`. It uses the same operations as mentioned in `select` feature,
+namely `Model#updateFilteredPersonList`, `Model#updateFilteredGroupList` and `Model#updateFilteredMeetingList`.
+
+Given below is an example usage scenario and operations executed by list mechanism at each step.
+
+Step 1. The user launches the application. `ModelManager` will be initialized with initial MeetingBook state, and
+`UniquePersonList`, `UniqueMeetingList` and `UniqueGroupList` contains all person, meetings and groups respectively
+without filter.
+
+Step 2. The user executes `list` command with additional parameter to specify the list to show all items. Available
+parameters are `person`, `meeting`, `group` and `all`, or their shorthand equivalent `p`, `m`, `g` and `a`.
+`ListCommandParser` parses the command to determine the list type, and the command executes the following steps:
+
+* Step 2.1. If the parameter is `group` / `g`, `Model#updateFilteredGroupList` is called with
+`PREDICATE_SHOW_ALL_GROUPS` to remove any filters applied to `UniqueGroupList`.
+
+* Step 2.2. If the parameter is `meeting` / `m`, `Model#updateFilteredMeetingList` is called with
+`PREDICATE_SHOW_ALL_MEETINGS` to remove any filters applied to `UniqueMeetingList`.
+
+* Step 2.3. If the parameter is `person` / `p`, `Model#updateFilteredPersonList` is called with
+`PREDICATE_SHOW_ALL_PERSONS` to remove any filters applied to `UniquePersonList`.
+
+* Step 2.4. If the parameter is `all` / `a` / empty, steps 2.1., 2.2. and 2.3. will be executed.
+
+[NOTE]
+List will remain unchanged if it does not have any filters applied before executing `list` command.
+
+.List group sequence diagram
+image::ListCommandSequenceDiagram.png[width="800"]
+
+Below is the pseudo code of `list` command execution.
+[source, java]
+----
+public CommandResult execute(Model model, CommandHistory history) {
+    requireNonNull(model);
+    switch (listCommandType) {
+        case PERSON:
+            // Show all persons, return success
+        case GROUP:
+            // Show all groups, return success
+        case MEETING:
+            // Show all meetings, return success
+        default:
+            // Show all persons, groups and meetings, return success
+    }
+}
+----
+
+==== Design considerations
+===== Aspect: Data structure to support the list command
+* **Alternative 1 (current choice)** : Use a single list class to perform all list operations.
+** Pros: Easy to implement as fewer lines of code are required.
+** Cons: Harder to extend list functionality if need to implement list command for other items, list class will become
+bloated if too many items require list command.
+* **Alternative 2** : Abstract list class containing required variables and methods without implementation, and specific
+list commands inherit from the abstract class and implement the execution functionality.
+** Pros: Good data structure, easy to extend functionality to other items that require list command.
+** Cons: Requires more lines of code to implement.
