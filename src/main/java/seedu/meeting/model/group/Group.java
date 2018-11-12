@@ -324,11 +324,16 @@ public class Group {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getTitle() + "\n")
-                .append("Description: ")
-                .append(getDescription() + "\n")
-                .append("Next meeting details: ")
-                .append(getMeeting() + "\n");
+        Meeting meeting = getMeeting();
+
+        builder.append(getTitle() + "\n");
+
+        if (meeting != null) {
+            builder.append("Next meeting details: ")
+                   .append(meeting + "\n");
+        } else {
+            builder.append("\n");
+        }
 
         return builder.toString();
     }
