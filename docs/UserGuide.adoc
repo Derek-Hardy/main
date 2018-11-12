@@ -148,7 +148,7 @@ Format: +
 address, or home address in lexicographical order or numerical order.
 ****
 
-Examples:
+Examples: +
 
 * `sort name`: Sorts the list of persons by name in lexicographical order.
 * `sort phone`: Sorts the list of persons by phone number in numerical order.
@@ -187,7 +187,14 @@ Shorthand: `find <p|g|m> [KEYWORDS]`
 
 Examples: +
 
-* `find person Abby`: finds all persons whose name contains `Abby`. +
+image::findCommandAllExample.png[width="450"]
+* `find p Alex`: finds all persons whose name contains `Alex`. (Refer to diagram above) +
+
+image::findCommandSomeExample.png[width="450"]
+* `find p s/yu li`: finds all persons whose name contains one of `yu` or `li`. (Refer to diagram above) +
+
+image::findCommandNoneExample.png[width="450"]
+* `find p n/Alex Bernice`: finds all persons whose name does not contain `Alex` or `Bernice` (Refer to diagram above) +
 * `find p Betty Charles`: finds all persons whose name contains `Betty` and `Charles`. +
 * `find p s/David Eric n/James`: finds all persons whose name contains one of `David` or `Eric`,
 and whose name does not contain `James`. +

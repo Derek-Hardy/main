@@ -39,7 +39,7 @@ between the two in the future can be complex.
 *** Justification: This feature allows user to modify how existing persons are categorised.
 *** Highlights: This feature makes use of `UniqueGroupList` in person, and `UniquePersonList` in group to keep track of membership relation among them.
 
-* *Code contributed*: [https://github.com/CS2103-AY1819S1-W17-3/main/pulls?q=is%3Apr+author%3ADerek-Hardy+is%3Aclosed[Pull requests]][https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=derek-hardy&sort=displayName&since=2018-09-12&until=2018-11-06&timeframe=day&reverse=false&repoSort=true[Reposense]]
+* *Code contributed*: [https://github.com/CS2103-AY1819S1-W17-3/main/pulls?q=is%3Apr+author%3Aderek-hardy[Pull requests]][https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=derek-hardy&sort=displayName&since=2018-09-12&until=2018-11-06&timeframe=day&reverse=false&repoSort=true[Reposense]]
 
 * *Other contributions*:
 
