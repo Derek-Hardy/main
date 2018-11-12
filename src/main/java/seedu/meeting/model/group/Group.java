@@ -318,7 +318,7 @@ public class Group {
 
         if (meeting != null) {
             builder.append("Next meeting details: ")
-                   .append(meeting + "\n");
+                    .append(meeting + "\n");
         } else {
             builder.append("\n");
         }
