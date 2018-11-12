@@ -125,19 +125,6 @@ public class Group {
         this.members.setPersons(members);
     }
 
-    // @@author jeffreyooi
-    /**
-     * Copy constructor
-     */
-    public Group(Group toCopy) {
-        this.title = toCopy.getTitle();
-        this.description = Optional.ofNullable(toCopy.getDescription());
-        this.meeting = Optional.ofNullable(toCopy.getMeeting());
-        this.members = new UniquePersonList();
-        this.members.setPersons(toCopy.getMembers());
-    }
-    // @@author
-
     public Title getTitle() {
         return title;
     }
@@ -230,8 +217,9 @@ public class Group {
 
     // @@author zenious
     /**
-     * Remove a person from this group that is not in groups yet.
-     *
+     * Remove a person from this group.
+     * This method differs from {@link #removeMember(Person)} as the person will not be
+     * updated with the new group relation.
      */
     public void removeMemberNoGroups(Person toRemove) {
         requireNonNull(toRemove);

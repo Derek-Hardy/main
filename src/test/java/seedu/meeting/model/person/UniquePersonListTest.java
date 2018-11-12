@@ -44,11 +44,19 @@ public class UniquePersonListTest {
     }
 
     @Test
-    public void contains_personWithSameIdentityFieldsInList_returnsTrue() {
+    public void hasEquivalentPerson_personWithSameIdentityFieldsInList_returnsTrue() {
         uniquePersonList.add(ALICE);
         Person editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
                 .build();
-        assertTrue(uniquePersonList.contains(editedAlice));
+        assertTrue(uniquePersonList.hasEquivalentPerson(editedAlice));
+    }
+
+    @Test
+    public void contains_personWithSameIdentityFieldsButDifferentDataInList_returnsFalse() {
+        uniquePersonList.add(ALICE);
+        Person editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+                .build();
+        assertFalse(uniquePersonList.contains(editedAlice));
     }
 
     @Test
@@ -56,6 +64,7 @@ public class UniquePersonListTest {
         uniquePersonList.add(ALICE);
         uniquePersonList.clear();
         assertFalse(uniquePersonList.contains(ALICE));
+        assertFalse(uniquePersonList.hasEquivalentPerson(ALICE));
     }
 
     @Test
@@ -64,6 +73,7 @@ public class UniquePersonListTest {
         uniquePersonList.clear();
         uniquePersonList.add(ALICE);
         assertTrue(uniquePersonList.contains(ALICE));
+        assertTrue(uniquePersonList.hasEquivalentPerson(ALICE));
     }
 
     @Test

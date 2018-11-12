@@ -3,7 +3,6 @@ package seedu.meeting.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.meeting.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -76,6 +75,15 @@ public class MeetingBook implements ReadOnlyMeetingBook {
     public void setGroups(List<Group> groups) {
         this.groups.setGroups(groups);
         this.meetings.setMeetings(this.groups.getAllMeetings());
+        for (Group g : groups) {
+            for (Person p : g.getMembers().asUnmodifiableObservableList()) {
+                Person toJoin = this.persons.getPersonByName(p.getName());
+                if (toJoin != null && !toJoin.hasGroup(g)) {
+                    toJoin.addGroup(g);
+                    this.persons.setPerson(p, toJoin);
+                }
+            }
+        }
     }
     // @@author
 
@@ -96,7 +104,7 @@ public class MeetingBook implements ReadOnlyMeetingBook {
      */
     public boolean hasPerson(Person person) {
         requireNonNull(person);
-        return persons.contains(person);
+        return persons.hasEquivalentPerson(person);
     }
 
     // @@author Derek-Hardy
@@ -280,6 +288,39 @@ public class MeetingBook implements ReadOnlyMeetingBook {
         return meetings.asUnmodifiableObservableList();
     }
 
+    // @@author Zenious
+    /**
+     * merges the {@code importedPerson} into the MeetingBook with regards to the {@code overwrite} flag.
+     */
+    private void mergePerson(Person importedPerson, boolean overwrite) {
+        if (!hasPerson(importedPerson)) {
+            addPerson(importedPerson);
+        } else if (overwrite) {
+            Person samePerson = getPersonByName(importedPerson.getName());
+            updatePerson(samePerson, importedPerson);
+        }
+    }
+    // @@author NyxF4ll
+
+    /**
+     * merges the {@code importedGroup} into the MeetingBook with regards to the {@code overwrite} flag.
+     */
+    private void mergeGroup(Group importedGroup, boolean overwrite) {
+        importedGroup.getMembersView()
+                .stream()
+                .filter((p) -> !persons.contains(p))
+                .forEach(importedGroup::removeMemberNoGroups);
+
+        // @@author Zenious
+        if (!hasGroup(importedGroup)) {
+            addGroup(importedGroup);
+        } else if (overwrite) {
+            Group sameGroup = getGroupByTitle(importedGroup.getTitle());
+            updateGroup(sameGroup, importedGroup);
+
+        }
+    }
+
     /**
      * Merge another MeetingBook into current MeetingBook.
      *
@@ -289,49 +330,19 @@ public class MeetingBook implements ReadOnlyMeetingBook {
         if (equals(imported)) {
             return;
         }
-        if (imported instanceof MeetingBook) {
-            MeetingBook importedBook = (MeetingBook) imported;
-            Iterator<Person> personItr = importedBook.persons.iterator();
-            while (personItr.hasNext()) {
-                Person importPerson = personItr.next();
-                if (!hasPerson(importPerson)) {
-                    addPerson(importPerson);
-                } else {
-                    if (overwrite) {
-                        Person samePerson = getPersonByName(importPerson.getName());
-                        updatePerson(samePerson, importPerson);
-                    }
-                }
-            }
 
-            Iterator<Group> groupItr = importedBook.groups.iterator();
-            while (groupItr.hasNext()) {
-                Group importGroup = groupItr.next();
-                List<Person> importGroupPersons = importGroup.getMembersView();
-                for (Person p: importGroupPersons) {
-                    for (Person p1 : persons.asUnmodifiableObservableList()) {
-                        if (!p1.equals(p)) {
-                            importGroup.removeMemberNoGroups(p);
-                            break;
-                        }
-                        if (importGroupPersons.isEmpty()) {
-                            break;
-                        }
-                    }
-                }
-                if (!hasGroup(importGroup)) {
-                    addGroup(importGroup);
-                } else {
-                    if (overwrite) {
-                        Group sameGroup = getGroupByTitle(importGroup.getTitle());
-                        updateGroup(sameGroup, importGroup);
-
-                    }
-                }
-            }
-
+        if (!(imported instanceof MeetingBook)) {
+            return;
         }
+        // @@author NyxF4ll
+        MeetingBook importedBook = (MeetingBook) imported;
+        importedBook.persons.iterator()
+                .forEachRemaining((person) -> mergePerson(person, overwrite));
+
+        importedBook.groups.iterator()
+                .forEachRemaining((group) -> mergeGroup(group, overwrite));
     }
+    // @@author
 
     @Override
     public boolean equals(Object other) {

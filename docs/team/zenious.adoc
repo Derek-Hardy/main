@@ -8,7 +8,7 @@
 
 
 Here you can find details on my contributions to various Software Engineering projects.
-
+[discrete]
 == PROJECT: MeetingBook
 
 MeetingBook is a desktop scheduler application developed in a course of 6 weeks under a module which aims to improve our proficiency in Software Engineering. MeetingBook is targeted at university students involved in multiple Co-Curricular Activities and Project-Based modules. MeetingBook is written by a team of 5 students from National University of Singapore's School of Computing. We modified a contact book, forked from https://github.com/nus-cs2103-AY1819S1/addressbook-level4[AddressBook-Level4] written by https://se-edu.github.io/[SE-EDU], to includes features such as grouping of contacts and assign meetings to such groups.

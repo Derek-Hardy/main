@@ -125,7 +125,7 @@ public class UniqueGroupList implements Iterable<Group> {
         if (!target.isPresent()) {
             throw new GroupNotFoundException();
         }
-        Group editedGroup = new Group(target.get());
+        Group editedGroup = target.get().copy();
         editedGroup.setMeeting(meeting);
         setGroup(target.get(), editedGroup);
     }
@@ -138,7 +138,7 @@ public class UniqueGroupList implements Iterable<Group> {
         if (!target.isPresent()) {
             throw new GroupNotFoundException();
         }
-        Group editedGroup = new Group(target.get());
+        Group editedGroup = target.get().copy();
         editedGroup.cancelMeeting();
         setGroup(target.get(), editedGroup);
     }

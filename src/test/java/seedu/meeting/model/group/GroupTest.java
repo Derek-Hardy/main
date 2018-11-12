@@ -38,7 +38,7 @@ public class GroupTest {
         Group group = new GroupBuilder().withNewPerson(ALICE).build();
         UniquePersonList list = group.getMembers();
 
-        assertTrue(list.contains(ALICE));
+        assertTrue(list.hasEquivalentPerson(ALICE));
     }
 
     @Test
@@ -63,6 +63,15 @@ public class GroupTest {
         group.addMember(person);
 
         group.removeMember(person);
+        assertFalse(group.hasMember(person));
+    }
+
+    @Test
+    public void removeMemberNoGroups_personRemovedFromGroup_returnsFalse() {
+        Person person = new PersonBuilder().build();
+        Group group = new GroupBuilder().withNewPerson(person).build();
+
+        group.removeMemberNoGroups(person);
         assertFalse(group.hasMember(person));
     }
 

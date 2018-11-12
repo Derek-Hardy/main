@@ -11,6 +11,7 @@ import seedu.meeting.commons.exceptions.IllegalValueException;
 import seedu.meeting.model.MeetingBook;
 import seedu.meeting.model.ReadOnlyMeetingBook;
 import seedu.meeting.model.group.Group;
+import seedu.meeting.model.group.exceptions.GroupNotFoundException;
 import seedu.meeting.model.person.Person;
 
 /**
@@ -65,6 +66,11 @@ public class XmlSerializableMeetingBook {
             Group group = g.toModelType();
             if (meetingBook.hasGroup(group)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_GROUP);
+            }
+            for (Person personInGroup : group.getMembersView()) {
+                if (!meetingBook.hasPerson(personInGroup)) {
+                    throw new GroupNotFoundException();
+                }
             }
             meetingBook.addGroup(group);
         }

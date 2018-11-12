@@ -12,7 +12,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 :warning-caption: :warning:
 endif::[]
-:repoURL: https://github.com/CS2103-AY1819S1-W17-3/main
+:repoURL: https://github.com/CS2103-AY1819S1-W17-3/main/tree/master
 
 By: `Team CS2103T-AY1819S1-W17-3`      Since: `Aug 2018`      Licence: `MIT`
 
@@ -140,7 +140,7 @@ image::LogicClassDiagram.png[width="800"]
 
 [discrete]
 ==== Events-Driven nature of the design
-
+x
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 .Component interactions for `delete 1` command (part 1)
@@ -795,85 +795,44 @@ The code snippet below showcase how MeetingBook toggle between the behaviour.
 [source, java]
 ----
 public void merge(ReadOnlyMeetingBook imported, boolean overwrite) {
-    // If Both book contains same entries
-    if (equals(imported)) {
-        return;
-    }
-    if (imported instanceof MeetingBook) {
-        MeetingBook importedBook = (MeetingBook) imported;
-        Iterator<Person> personItr = importedBook.persons.iterator();
-        while (personItr.hasNext()) {
-            Person importPerson = personItr.next();
-            if (!hasPerson(importPerson)) {
-                addPerson(importPerson);
-            } else {
-                if (overwrite) {
-                    Person samePerson = getPersonByName(importPerson.getName());
-                    updatePerson(samePerson, importPerson);
-                }
-            }
+        // If Both book contains same entries
+        if (equals(imported)) {
+            return;
         }
 
-      // ... Do likewise for group...
+        if (!(imported instanceof MeetingBook)) {
+            return;
+        }
+        MeetingBook importedBook = (MeetingBook) imported;
+        importedBook.persons.iterator()
+                .forEachRemaining((person) -> mergePerson(person, overwrite));
 
+        importedBook.groups.iterator()
+                .forEachRemaining((group) -> mergeGroup(group, overwrite));
     }
-}
 ----
 
 
 ==== Handling of irrelevant imported data
 
-The behaviour when importing data that is incorrectly formatted differs on where the incorrect data detected. If the data imported is wrong in entirety, `DataConversionException` is thrown and the error message, "Data file provided is not in the correct format." is shown to the user.
+The default conflicting resolving behavior (ignoring any conflict files) may cause `Person` to lose their association with `Group`.
 
-However, when a XML file which is valid yet incorrectly formatted (e.g. `persons` stored in `groups` is not stored also in `persons`), the `persons` inside the `members` tag of the XML file is ignored. This removes and prevents the addition of the association between `Person` and `Group` to the current MeetingBook.
+Take this case for example. Current MeetingBook and the imported MeetingBook both have a Person named "Alex Lim" with the following attributes.
 
-Also, when `--force` is not used in the command and integrating the imported groups into the current MeetingBook, the `persons` inside the `members` tag may not be available in the current MeetingBook. The behaviour to handle this situation is the same as how it handles valid yet incorrectly formatted XML.
+.Object Diagram of "Alex Lim" `Person` Object in current MeetingBook and imported MeetingBook
+image::AlexLimObjectDiagram.png[]
 
-.Example of correctly Formatted XML file.
-[source, xml]
-----
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<meetingbook>
-    <persons>
-        <name>Alex Yeoh</name>
-        // Meeting info..
-    </persons>
-    <groups>
-        <title>CS2101</title>
-        <meeting>
-            // Meeting info...
-        </meeting>
-        <members>
-            <name>Alex Yeoh</name>
-            // Person info...
-        </members>
-    </groups>
-</meetingbook>
-----
-<1> The `Person` is available as it is also contained as `persons` in this XML file  as well as in `members`.
+When the default conflicting resolving behaviour is used, "Alex Lim" of the imported MeetingBook will not be imported into current MeetingBook.
 
-.Example of Incorrectly Formatted XML file where Unknown Person contained inside Group
-[source, xml]
-----
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<meetingbook>
-    <persons>
-        <name>Alex Yeoh</name>
-        // Person info...
-    </persons>
-    <groups>
-        <title>CS2101</title>
-        <meeting>
-          // Meeting info...
-        </meeting>
-        <members>
-            <name>Incorrect User</name> <!--1-->
-            // Person info
-        </members>
-    </groups>
-</meetingbook>
-----
-<1> The `Person` is not available as is not contained as `persons` in this XML file but only in `members`.
+However, "Alex Lim" of the imported MeetingBook belongs to a `Group`.
+
+.Object Diagram of "Alex Lim" `Person` of imported MeetingBook belonging to a `Group` before merging to current MeetingBook
+image::BeforeImportAlexLimGroup.png[]
+
+Therefore, when importing the `Group` that "Alex Lim" of the imported MeetingBook is in, the `Group` will be imported without "Alex Lim" of the imported MeetingBook. The `Group` will not contains "Alex Lim" of the current MeetingBook as these two "Alex Lim" are not of the same `Person`. Even if "Alex Lim" of the imported MeetingBook is the sole member of the `Group`, the `Group` will still be created but with no members instead.
+
+.Object Diagram of "Alex Lim" `Person` of imported MeetingBook belonging to a `Group` after merging to current MeetingBook
+image::AfterImportAlexLimGroup.png[]
 
 ==== Design Consideration
 ===== Aspect: Handling of conflict entries
@@ -1079,7 +1038,7 @@ See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build auto
 
 === Continuous Integration
 
-We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
+We use https://travis-ci.org/[Travis CI] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> for more details.
 
 === Coverage Reporting
 

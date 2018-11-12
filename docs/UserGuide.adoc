@@ -12,7 +12,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/CS2103-AY1819S1-W17-3/main
+:repoURL: https://github.com/CS2103-AY1819S1-W17-3/main/tree/master
 
 By: `Team CS2103T-AY1819S1-W17-3`      Since: `Aug 2018`      Licence: `MIT`
 
@@ -148,7 +148,8 @@ Format: +
 address, or home address in lexicographical order or numerical order.
 ****
 
-Examples: +
+Examples:
+
 * `sort name`: Sorts the list of persons by name in lexicographical order.
 * `sort phone`: Sorts the list of persons by phone number in numerical order.
 * `sort email`: Sorts the list of persons by email address in lexicographical order.

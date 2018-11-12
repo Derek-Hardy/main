@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<meetingbook>
+    <persons>
+        <name>Alex Yeoh</name>
+        <phone>87438807</phone>
+        <email>alexyeoh@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Pakorn Ueareeworakul</name>
+        <phone>90352406</phone>
+        <email>e0196816@u.nus.edu</email>
+        <address>6 College Avenue East #16-01B</address>
+    </persons>
+    <persons>
+        <name>Alex Lim</name>
+        <phone>83377331</phone>
+        <email>leet@comp.nus.edu.sg</email>
+        <address>13 Computing Drive</address>
+    </persons>
+    <groups>
+        <title>CS2103T Project</title>
+        <meeting>
+            <title>Bug Review</title>
+            <time>17-11-2018@11:0</time>
+            <location>COM1 02 Foyer</location>
+            <description>Review bugs reported during PE</description>
+        </meeting>
+        <members>
+            <name>Alex Yeoh</name>
+            <phone>87438807</phone>
+            <email>alexyeoh@example.com</email>
+            <address>Blk 30 Geylang Street 29, #06-40</address>
+            <tagged>friends</tagged>
+        </members>
+        <members>
+            <name>Charlotte Oliveiro</name>
+            <phone>93210283</phone>
+            <email>charlotte@example.com</email>
+            <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+            <tagged>neighbours</tagged>
+        </members>
+    </groups>
+    <groups>
+        <title>OP1</title>
+        <members>
+            <name>Roy Balakrishnan</name>
+            <phone>92624417</phone>
+            <email>royb@example.com</email>
+            <address>Blk 45 Aljunied Street 85, #11-31</address>
+            <tagged>colleagues</tagged>
+        </members>
+        <members>
+            <name>Alex Lim</name>
+            <phone>83377331</phone>
+            <email>leet@comp.nus.edu.sg</email>
+            <address>13 Computing Drive</address>
+        </members>
+        <members>
+            <name>Pakorn Ueareeworakul</name>
+            <phone>90352406</phone>
+            <email>e0196816@u.nus.edu</email>
+            <address>6 College Avenue East #16-01B</address>
+        </members>
+        <members>
+            <name>David Li</name>
+            <phone>91031282</phone>
+            <email>lidavid@example.com</email>
+            <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+            <tagged>family</tagged>
+        </members>
+    </groups>
+    <groups>
+        <title>OP2</title>
+        <meeting>
+            <title>Reflection Writing</title>
+            <time>15-11-2018@14:20</time>
+            <location>YIH</location>
+            <description>Draw plans on writing the Reflection</description>
+        </meeting>
+        <members>
+            <name>Alex Yeoh</name>
+            <phone>87438807</phone>
+            <email>alexyeoh@example.com</email>
+            <address>Blk 30 Geylang Street 29, #06-40</address>
+            <tagged>friends</tagged>
+        </members>
+        <members>
+            <name>Irfan Ibrahim</name>
+            <phone>92492021</phone>
+            <email>irfan@example.com</email>
+            <address>Blk 47 Tampines Street 20, #17-35</address>
+            <tagged>classmates</tagged>
+        </members>
+        <members>
+            <name>Bernice Yu</name>
+            <phone>99272758</phone>
+            <email>berniceyu@example.com</email>
+            <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+            <tagged>colleagues</tagged>
+            <tagged>friends</tagged>
+        </members>
+    </groups>
+    <groups>
+        <title>Frisbee Team</title>
+        <meeting>
+            <title>Weekend practice</title>
+            <time>18-11-2018@17:30</time>
+            <location>Yale Field</location>
+            <description>Practice for ICG</description>
+        </meeting>
+        <members>
+            <name>Irfan Ibrahim</name>
+            <phone>92492021</phone>
+            <email>irfan@example.com</email>
+            <address>Blk 47 Tampines Street 20, #17-35</address>
+            <tagged>classmates</tagged>
+        </members>
+        <members>
+            <name>Roy Balakrishnan</name>
+            <phone>92624417</phone>
+            <email>royb@example.com</email>
+            <address>Blk 45 Aljunied Street 85, #11-31</address>
+            <tagged>colleagues</tagged>
+        </members>
+    </groups>
+    <groups>
+        <title>Board Games</title>
+        <meeting>
+            <title>Weekly Session</title>
+            <time>14-11-2018@21:15</time>
+            <location>Games Room</location>
+            <description>Catan, Power Grid, and Kanagawa</description>
+        </meeting>
+        <members>
+            <name>Charlotte Oliveiro</name>
+            <phone>93210283</phone>
+            <email>charlotte@example.com</email>
+            <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+            <tagged>neighbours</tagged>
+        </members>
+        <members>
+            <name>Alex Lim</name>
+            <phone>83377331</phone>
+            <email>leet@comp.nus.edu.sg</email>
+            <address>13 Computing Drive</address>
+        </members>
+        <members>
+            <name>Pakorn Ueareeworakul</name>
+            <phone>90352406</phone>
+            <email>e0196816@u.nus.edu</email>
+            <address>6 College Avenue East #16-01B</address>
+        </members>
+    </groups>
+    <groups>
+        <title>NUS Orbital</title>
+        <meeting>
+            <title>Project commercialization</title>
+            <time>19-11-2018@15:0</time>
+            <location>Residential College 4</location>
+            <description>Meeting to review issues regarding commercialization of the project</description>
+        </meeting>
+        <members>
+            <name>Bernice Yu</name>
+            <phone>99272758</phone>
+            <email>berniceyu@example.com</email>
+            <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+            <tagged>colleagues</tagged>
+            <tagged>friends</tagged>
+        </members>
+        <members>
+            <name>Alex Lim</name>
+            <phone>83377331</phone>
+            <email>leet@comp.nus.edu.sg</email>
+            <address>13 Computing Drive</address>
+        </members>
+    </groups>
+    <groups>
+        <title>Laundry Machine Bot</title>
+        <members>
+            <name>Pakorn Ueareeworakul</name>
+            <phone>90352406</phone>
+            <email>e0196816@u.nus.edu</email>
+            <address>6 College Avenue East #16-01B</address>
+        </members>
+        <members>
+            <name>David Li</name>
+            <phone>91031282</phone>
+            <email>lidavid@example.com</email>
+            <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+            <tagged>family</tagged>
+        </members>
+    </groups>
+</meetingbook>
