@@ -402,55 +402,65 @@ through `ModelManager`.
 
 `Meeting` is one of the central feature of this application. It allows the user to create a reminder of an upcoming event associated with a `Group`.
 
-[NOTE]
-A `Group` can only have a maximum of one `Meeting` at any given time.
-
 ==== Current Implementation
-.The Meeting class
 
+Meetings are encapsulated using the `Meeting` class.
+
+.Diagram of the meeting class
 image::meetingClassDiagram.png[width="300"]
 
 *API* : link:{repoURL}/src/main/java/seedu/meeting/model/group/Meeting.java[`Meeting.java`]
 
-The `Meeting`,
+`Meeting` have the following properties:
 
-Meeting encapsulates information of a meeting.
+* It contains the title, time, location and description of the meeting it describes.
+* Each `Group` object can have a maximum of one meeting.
+* Two `Meetings` are considered similar if they share the same title, time, and location.
 
-* contains the title, time, location and description of a meeting.
-* resides in `Group` objects and can be assigned to a group using the `meet` command which utilises the `updateGroup` method of the `Model` interface.
-* each `Group` object can have a maximum of one meeting.
-* two `Meetings` are considered similar if they share the same title, time, and location
-
-==== Usage of Meeting class
+==== Using the Meeting class
 
 In the current implementation, `Meeting` is related to `Group` by composition. To facilitate the meeting feature, `Group` implements the following operations:
 
-* `Group#hasMeeting` -- This returns `true` if there is a meeting associated with the group.
+* `Group#hasMeeting()` -- This returns `true` if there is a meeting associated with the group
 * `Group#getMeeting()` -- This group's meeting or `null` if the group has no meeting.
 * `Group#setMeeting(Meeting meeting)` -- This assigns `meeting` to the group.
 * `Group#cancelMeeting()` -- This removes the meeting associated witht the group.
 
-These operations can be accessed by retreiving the list of groups using `Model#getGroupList()` and performing these operations on its members.
+These operations can be accessed through the model using the following operations:
+
+* `Model#setMeeting(Group group, Meeting meeting)` -- This assigns the meeting `meeting` to the group `group`.
+* `Model#cancelMeeting(Group group)` -- This cancels the meeting associated with the group `group`
 
 **Given below is an example usage scenario and how the model behaves at each step.**
 
-Step 1. The user launches the application. For simplicity, we assume that the groups `Project2103`, `Presentation` and `FrisbeeTeam` are present in the MeetingBook. None of these groups have a meeting scheduled.
 
+Step 1. The application is launched.
+
+[NOTE]
+We assumes that the groups `Project2103`, `Presentation` and `FrisbeeTeam` are present in the MeetingBook, and that none of the groups mentioned has a meeting scheduled.
+
+.The UniqueGroupList after Step 1.
 image::meetCommandStep1Diagram.png[width="600"]
 
 [NOTE]
 Meeting field in a group without a meeting is an empty `Optional`
 
-Step 2. The user executes `meet FrisbeeTeam n/Sunday Practice t/28-10-2018@10:00 l/UTown Green d/Practice for Inter-College Games` to schedule a meeting named `Sunday Practice` associated with the group `FrisbeeTeam`.
+Step 2. The command `meet FrisbeeTeam n/Sunday Practice t/28-10-2018@10:00 l/UTown Green d/Practice for Inter-College Games` is executed. This schedules a meeting named `Sunday Practice` with the group `FrisbeeTeam`.
 
+.The UniqueGroupList after Step 2.
 image::meetCommandStep2Diagram.png[width="600"]
 
-Step 3. The user then executes `meet Project2103 n/Weekly Meeting...` to schedule a meeting called `Weekly Meeting` with the `Project2103` Group.
+Step 3. The command `meet Project2103 n/Weekly Meeting...` is executed. This schedules a meeting named `Weekly Meeting` with the group `Project2103`.
 
+[Note]
+`...` represents any valid arguments that legally completes the command.
+
+.The UniqueGroupList after Step 3.
 image::meetCommandStep3Diagram.png[width="600"]
 
-Step 4. The user then found out that the meeting `Sunday Practice` with `FrisbeeTeam` has been cancelled. Thus, the user calls `cancel FrisbeeTeam` to cancel meeting with the `FrisbeeTeam` group.
+Step 4. The command `cancel FrisbeeTeam` is executed. This removes the meeting `Sunday Practice` from the group `FrisbeeTeam`.
 
+.The UniqueGroupList after Step 4.
 image::meetCommandStep4Diagram.png[width="600"]
 
 [NOTE]
@@ -459,8 +469,9 @@ Calling `cancel` on a group without meeting returns an error
 [NOTE]
 calling `meet GROUP_NAME` without argument is equivalent to calling `cancel GROUP_NAME`.
 
-Step 5. The user then discovers that the topic of the meeting with `Project2103` changed to rehearsal for the upcoming software demo. Therefore, the user calls `meet Project2103 n/Demo Preparation...` to change the detail of the meeting This overwrites the meeting `Weekly Meeting` with the new meeting `Demo Preparation`.
+Step 5. The command `meet Project2103 n/Demo Preparation...` is executed. This overwrites the meeting `Weekly Meeting` associated with the group `Project2103` with the new meeting named `Demo Preparation`.
 
+.The UniqueGroupList after Step 5.
 image::meetCommandStep5Diagram.png[width="600"]
 
 [NOTE]
@@ -515,7 +526,7 @@ include::UserGuide.adoc[tag=find]
 
 ===== Structure of `find` command
 
-image::FindCommandClassDiagram.png[width="400"]
+image::FindCommandClassDiagram.png[width="700"]
 
 When the user executes a `find` command, the `FindCommandParser` returns either a `FindPersonCommand`, a `FindMeetingCommand`, or a `FindGroupCommand`,
  depending on the user's input. `FindPersonCommand`, `FindMeetingCommand`, and `FindGroupCommand` extends the
@@ -552,7 +563,7 @@ Referring to the code snippet above, `FindCommand<E>` implements the `equals()` 
 
 ===== Structure of Predicates
 
-image::PredicateClassDiagram.png[width="400"]
+image::PredicateClassDiagram.png[width="700"]
 
 The predicates are created using the abstract class `EntityContainsKeywordsPredicate<E>`.
 `PersonNameContainsKeywordsPredicate` extends `EntityContainsKeywordsPredicate<Person>`,

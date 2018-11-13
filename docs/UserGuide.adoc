@@ -242,26 +242,30 @@ Examples:
 
 * Example 1:
 1. `meet Presentation2101 n/Demo Rehearsal t/26-10-2018@12:30 l/COM1-0218 d/Meeting for Project Demo` +
-(This schedules the meeting) +
+(This schedules the meeting)
 +
-2. `list meeting` +
-(This displays the list of meetings)
+.Result of the command, note the meeting 'Demo Rehearsal'.
+image::meetCommandUserGuideStep1.png[width="500"]
 
 * Example 2:
 1. `meet Presentation2101 n/Demo Rehearsal t/26-10-2018@12:30 l/COM1-0218 d/Meeting for Project Demo` +
 (This schedules the meeting) +
 +
-2. `list meeting` +
-(This displays `Demo Rehearsal` as the meeting associated with `Presentation 2101`) +
+.Result of the command, note the meeting 'Demo Rehearsal'.
+image::meetCommandUserGuideStep1.png[width="500"]
 +
-3. `meet Presentation2101 n/Discussion on Slides t/26-10-2018@12:30 l/COM1-0218 d/Some slides are wrong` +
-(This overwrites `Demo Rehearsal` with `Discussion on Slides`) +
+3. `meet Presentation2101 n/Emergency Meeting t/26-10-2018@12:30 l/COM1-0218 d/Some slides are wrong` +
+(This overwrites `Demo Rehearsal` with `Emergency Meeting`) +
 +
-4. `list meeting` (`Emergency Meeting` is displayed instead of `Demo Rehearsal`)
+.Result of the command, note the 'Emergency Meeting' now replaces 'Demo Rehearsal'.
+image::meetCommandUserGuideStep2.png[width="500"]
 
 * Example 3:
-1. `meet OtherGroup ...` +
+1. `meet OtherGroup n/Emergency Meeting t/26-10-2018@12:30 l/COM1-0218 d/Some slides are wrong` +
 (This fails because `OtherGroup` is not in the MeetingBook)
++
+.Result of the command, note the error message'.
+image::meetCommandUserGuideError.png[width="500"]
 
 [NOTE]
 It is assumed that the group `Presentation2101` is present and is the only group in the MeetingBook and has no meeting as of the moment before each example starts.
